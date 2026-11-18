@@ -156,6 +156,44 @@ export async function VisitSection() {
                     <ReservationForm />
                 </Reveal>
             </div>
+
+            <Reveal
+                delay={300}
+                className="relative mx-auto mt-10 max-w-6xl"
+            >
+                <div className="overflow-hidden rounded-card border border-cream/15 shadow-lift">
+                    <iframe
+                        title={`Map showing ${settings.businessName}`}
+                        src={`https://www.google.com/maps?q=${encodeURIComponent(`${settings.businessName}, ${settings.addressLine}`)}&output=embed`}
+                        loading="lazy"
+                        referrerPolicy="no-referrer-when-downgrade"
+                        allowFullScreen
+                        className="block h-[340px] w-full border-0"
+                    />
+                </div>
+                <div className="mt-6 flex flex-wrap items-center justify-center gap-x-5 gap-y-3 text-center">
+                    <span className="inline-flex items-center gap-2 text-[15px] font-semibold">
+                        <svg
+                            width="18"
+                            height="18"
+                            viewBox="0 0 24 24"
+                            fill="#E8B339"
+                            aria-hidden="true"
+                        >
+                            <path d="M12 2.5l2.7 5.9 6.3.7-4.7 4.4 1.3 6.3-5.6-3.2-5.6 3.2 1.3-6.3-4.7-4.4 6.3-.7Z" />
+                        </svg>
+                        {settings.googleRating} · {settings.googleReviewCount} Google reviews
+                    </span>
+                    <a
+                        href={searchUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 rounded-full bg-cream px-5 py-2.5 text-sm font-semibold text-maroon transition hover:-translate-y-0.5 hover:shadow-float"
+                    >
+                        Read our reviews on Google →
+                    </a>
+                </div>
+            </Reveal>
         </section>
     );
 }

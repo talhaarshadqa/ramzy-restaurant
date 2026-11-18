@@ -63,6 +63,16 @@ export async function Hero() {
                     Find Us
                 </Button>
             </Reveal>
+
+            <div
+                aria-hidden="true"
+                className="pointer-events-none absolute bottom-9 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-gold-light/80 md:flex"
+            >
+                <span className="text-[10px] font-semibold uppercase tracking-[0.3em]">Scroll</span>
+                <span className="flex h-9 w-[22px] items-start justify-center rounded-full border border-cream/40 p-1.5">
+                    <span className="h-2 w-1 animate-scroll-dot rounded-full bg-gold-light" />
+                </span>
+            </div>
         </header>
     );
 }

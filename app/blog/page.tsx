@@ -11,6 +11,12 @@ export const metadata: Metadata = {
     description: 'News, updates and stories from Ramzy Restaurant, Bury New Road, Manchester.',
 };
 
+export const metadata = {
+    title: 'News & Stories',
+    description: 'The latest from Ramzy Restaurant — Sunday specials, behind-the-scenes from the kitchen, and news from Bury New Road, Manchester.',
+    alternates: {canonical: '/blog'},
+};
+
 export default async function BlogIndexPage() {
     const posts = await getBlogPosts();
 

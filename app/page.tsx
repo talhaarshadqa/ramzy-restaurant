@@ -11,6 +11,7 @@ import {RoomSection} from '@/components/site/RoomSection';
 import {SignatureDishesSection} from '@/components/site/SignatureDishesSection';
 import {StatsSection} from '@/components/site/StatsSection';
 import {StorySection} from '@/components/site/StorySection';
+import {StructuredData} from '@/components/site/StructuredData';
 import {VisitSection} from '@/components/site/VisitSection';
 import {WordTicker} from '@/components/site/WordTicker';
 import {getBlogPosts} from '@/lib/data/blog';
@@ -20,6 +21,7 @@ export default async function HomePage() {
 
     return (
         <>
+            <StructuredData />
             <Header />
             <main className="flex-1">
                 <Hero />
