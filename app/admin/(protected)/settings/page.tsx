@@ -1,3 +1,4 @@
+import {ChangePasswordForm} from '@/components/admin/ChangePasswordForm';
 import {SettingsForm} from '@/components/admin/SettingsForm';
 import {getSiteSettings} from '@/lib/data/settings';
 
@@ -12,6 +13,12 @@ export default async function AdminSettingsPage() {
                 below.
             </p>
             <SettingsForm settings={settings} />
+
+            <div className="mt-12 border-t border-line pt-10">
+                <h2 className="mb-2 font-display text-2xl font-bold text-ink">Security</h2>
+                <p className="mb-6 max-w-lg text-sm text-ink-soft">Change the password you use to sign in to this admin panel.</p>
+                <ChangePasswordForm />
+            </div>
         </div>
     );
 }
