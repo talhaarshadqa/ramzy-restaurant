@@ -1,0 +1,172 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model AdminUser {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model MenuCategory {
+  id            String     @id @default(cuid())
+  name          String
+  slug          String     @unique
+  icon          String?
+  isHighlighted Boolean    @default(false)
+  // Homepage "Cuisine" teaser tiles: a short editorial blurb + whether to show this category there.
+  tagline          String?
+  isFeaturedOnHome Boolean @default(false)
+  displayOrder     Int     @default(0)
+  items            MenuItem[]
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model MenuItem {
+  id           String       @id @default(cuid())
+  categoryId   String
+  category     MenuCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  name         String
+  description  String?
+  singlePrice  Decimal?     @db.Decimal(6, 2)
+  medPrice     Decimal?     @db.Decimal(6, 2)
+  largePrice   Decimal?     @db.Decimal(6, 2)
+  displayOrder Int          @default(0)
+  isAvailable  Boolean      @default(true)
+  // Homepage "Signatures" showcase: marking a real menu item keeps its displayed price always accurate.
+  isSignature          Boolean  @default(false)
+  signatureLabel       String?
+  signatureDescription String?
+  signatureOrder       Int      @default(0)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+
+  @@index([categoryId])
+}
+
+enum InquiryStatus {
+  NEW
+  CONTACTED
+  CONFIRMED
+  CLOSED
+  CANCELLED
+}
+
+model Inquiry {
+  id           String        @id @default(cuid())
+  name         String
+  phone        String
+  email        String?
+  partySize    Int
+  requestedAt  DateTime
+  message      String?
+  status       InquiryStatus @default(NEW)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  @@index([status])
+  @@index([requestedAt])
+}
+
+model SiteSettings {
+  id               String  @id @default("singleton")
+  openingHoursText String  @default("Open 7 Days a Week 11am – 6pm")
+  todaysStatusNote String?
+
+  // Business / contact info (footer, header, rating bar, visit section)
+  businessName      String  @default("Ramzy Restaurant")
+  addressLine       String  @default("13 Bury New Road, Cheetham Hill, Manchester M8 8FW")
+  neighbourhood     String  @default("Cheetham Hill, Manchester")
+  phoneDisplay      String  @default("0161 915 6242")
+  phoneHref         String  @default("tel:+441619156242")
+  mobileDisplay     String  @default("07762 520633")
+  mobileHref        String  @default("tel:+447762520633")
+  facebookHandle    String  @default("Ramzy Manchester")
+  googleRating      Decimal @default(4.7) @db.Decimal(2, 1)
+  googleReviewCount Int     @default(182)
+  priceRange        String  @default("£10–20 per person")
+
+  // Reservation email notifications
+  ownerNotificationEmail String?
+
+  // Hero section
+  heroEyebrow String @default("حلال · Halal Kitchen · Manchester")
+  heroTagline String @default("Kebabs, curries and biryani — freshly made, halal, and served seven days a week in the heart of Manchester.")
+  heroBadge1  String @default("Open 7 Days")
+  heroBadge2  String @default("Bury New Road, Manchester")
+
+  // Story ("What is Ramzy?") section
+  storyHeading       String @default("A name that means")
+  storyHeadingAccent String @default("hospitality.")
+  storyParagraph      String @default("Food, at Ramzy, is never rushed. It's hand-pressed kebabs off the grill, onions cooked low and slow until they turn deep gold, and naan baked fresh through the day — the same halal South Asian cooking that's been passed down and perfected over years.")
+  storyQuote          String @default("Ramzy is a place of gathering, of family, of quiet weekday lunches and loud Sunday dinners. Pull up a chair — the table is set.")
+
+  // Masterpieces section
+  masterpiecesHeading       String @default("Crafted icons &")
+  masterpiecesHeadingAccent String @default("signature plates.")
+
+  // Cuisine categories section
+  cuisineHeading    String @default("Explore the menu, course by course.")
+  cuisineSubheading String @default("From smoky grills to slow-simmered curries, fragrant pilau and fresh-baked naan — every category tells its own part of the story.")
+
+  // Signature dishes section
+  signatureSubheading String @default("A few of the plates our regulars return for.")
+
+  // Room section
+  roomHeading        String @default("Step inside,")
+  roomHeadingAccent  String @default("and stay a while.")
+  roomParagraph1     String @default("Warm light, the smell of fresh naan from the kitchen, and tables that fill up fast on a Sunday — this is a room built for gathering, not rushing.")
+  roomParagraph2     String @default("Whether it's a quick bite between errands on Bury New Road or a full table for a celebration, we've got a seat for you.")
+
+  // Stats ("The Tale So Far") section
+  statDishesValue String @default("65+")
+  statDishesLabel String @default("Dishes on the Menu")
+  statHalalValue  String @default("100%")
+  statHalalLabel  String @default("Halal")
+
+  updatedAt DateTime @updatedAt
+}
+
+model BlogPost {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  excerpt     String
+  content     String
+  coverImage  String?
+  isPublished Boolean  @default(true)
+  publishedAt DateTime @default(now())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([isPublished, publishedAt])
+}
+
+enum GallerySlot {
+  HERO_SLIDER
+  GALLERY
+  MASTERPIECES
+  ROOM
+}
+
+model GalleryImage {
+  id           String      @id @default(cuid())
+  slot         GallerySlot
+  imagePath    String
+  altText      String
+  displayOrder Int         @default(0)
+  isActive     Boolean     @default(true)
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+
+  @@index([slot, isActive, displayOrder])
+}

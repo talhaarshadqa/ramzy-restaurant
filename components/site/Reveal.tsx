@@ -1,0 +1,42 @@
+'use client';
+
+import type {CSSProperties, ReactNode} from 'react';
+
+import {useEffect, useRef, useState} from 'react';
+
+type Variant = 'fade' | 'pop';
+
+export function Reveal({children, variant = 'fade', delay = 0, className = '', style}: {children: ReactNode; variant?: Variant; delay?: number; className?: string; style?: CSSProperties}) {
+    const ref = useRef<HTMLDivElement>(null);
+    const [visible, setVisible] = useState(false);
+
+    useEffect(() => {
+        const el = ref.current;
+        if (!el) return;
+
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setVisible(true);
+                    observer.unobserve(el);
+                }
+            },
+            {threshold: 0.15, rootMargin: '0px 0px -40px 0px'},
+        );
+        observer.observe(el);
+        return () => observer.disconnect();
+    }, []);
+
+    const hiddenState = variant === 'pop' ? 'opacity-0 scale-75' : 'opacity-0 translate-y-6';
+    const easing = variant === 'pop' ? 'ease-[cubic-bezier(0.34,1.56,0.64,1)]' : 'ease-out';
+
+    return (
+        <div
+            ref={ref}
+            className={`reveal-el transition-all duration-700 ${easing} ${visible ? 'opacity-100 scale-100 translate-y-0' : hiddenState} ${className}`}
+            style={{transitionDelay: `${delay}ms`, ...style}}
+        >
+            {children}
+        </div>
+    );
+}

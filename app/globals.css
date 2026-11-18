@@ -1,0 +1,68 @@
+@import 'tailwindcss';
+
+@theme {
+    --color-maroon: #6e1e2b;
+    --color-maroon-dark: #4a1420;
+    --color-noir: #220a10;
+    --color-gold: #b8923f;
+    --color-gold-light: #d7b873;
+    --color-cream: #faf3e6;
+    --color-cream-soft: #fffdf8;
+    --color-ink: #2b1810;
+    --color-ink-soft: #5c4433;
+    --color-line: #ebdfc2;
+
+    --font-display: var(--font-playfair), Georgia, serif;
+    --font-body: var(--font-worksans), system-ui, sans-serif;
+
+    --radius-card: 1.25rem;
+
+    --shadow-card: 0 2px 10px rgba(43, 24, 16, 0.07);
+    --shadow-float: 0 16px 36px rgba(43, 24, 16, 0.1);
+    --shadow-lift: 0 30px 70px rgba(43, 24, 16, 0.18);
+}
+
+html {
+    scroll-behavior: smooth;
+    /* Offset anchor jumps so the sticky header doesn't cover section headings. */
+    scroll-padding-top: 5rem;
+}
+
+body {
+    background: var(--color-cream);
+    color: var(--color-ink);
+}
+
+::selection {
+    background: var(--color-gold);
+    color: var(--color-noir);
+}
+
+@keyframes marquee {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+.animate-marquee {
+    animation: marquee 32s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    .animate-marquee {
+        animation: none;
+    }
+
+    .reveal-el {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+    }
+}
