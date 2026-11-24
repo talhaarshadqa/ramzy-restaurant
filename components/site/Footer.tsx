@@ -38,9 +38,22 @@ export async function Footer() {
                     </p>
                 </div>
             </div>
-            <p className="mx-auto mt-8 max-w-6xl border-t border-white/10 pt-6 text-xs text-[#9c8669]">
-                © {new Date().getFullYear()} {settings.businessName}. All rights reserved.
-            </p>
+            <div className="mx-auto mt-8 flex max-w-6xl flex-col gap-2 border-t border-white/10 pt-6 text-xs text-[#9c8669] sm:flex-row sm:items-center sm:justify-between">
+                <p>
+                    © {new Date().getFullYear()} {settings.businessName}. All rights reserved.
+                </p>
+                <p>
+                    Designed &amp; Developed by{' '}
+                    <a
+                        href="https://www.instagram.com/talhaarshad.official"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[#c9b795] underline-offset-4 transition-colors duration-200 hover:text-cream hover:underline"
+                    >
+                        Talha Arshad
+                    </a>
+                </p>
+            </div>
         </footer>
     );
 }
