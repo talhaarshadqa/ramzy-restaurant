@@ -38,7 +38,7 @@ export async function Footer() {
                     </p>
                 </div>
             </div>
-            <div className="mx-auto mt-8 flex max-w-6xl flex-col gap-2 border-t border-white/10 pt-6 text-xs text-[#9c8669] sm:flex-row sm:items-center sm:justify-between">
+            <div className="mx-auto mt-8 flex max-w-6xl flex-col items-center gap-2 border-t border-white/10 pt-6 text-center text-xs text-[#9c8669]">
                 <p>
                     © {new Date().getFullYear()} {settings.businessName}. All rights reserved.
                 </p>
